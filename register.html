@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+    <link href="index.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Registration</h1>
+      <form id="registrationForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <script>
+      let registrationForm = document.getElementById("registrationForm");
+
+      registrationForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let email = document.getElementById("email").value;
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+
+        registerUser(email, username, password);
+      });
+
+      async function registerUser(email, username, password) {
+        let response = await fetch("https://diner-latest-aushveen.onrender.com/merger/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({email: email, username: username, password: password})
+        });
+
+        console.log(JSON.stringify({email: email, username: username, password: password}));
+
+        if (response.ok) {
+          window.location.href = "login.html";
+        } else {
+          alert("Registration failed. Please try again.");
+        }
+      }
+    </script>
+  </body>
+</html>

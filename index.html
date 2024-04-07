@@ -7,24 +7,36 @@
     <link href="index.css" rel="stylesheet"/>
   </head>
   <body>
+    <nav>
+      <ul>
+        <li><a href="#" onclick="displayMenu('/merger')">All Menus</a></li>
+        <li><a href="#" onclick="displayMenu('/merger/vegetarian')">Vegetarian</a></li>
+        <li><a href="#" onclick="displayMenu('/merger/breakfast')">Breakfast</a></li>
+        <li><a href="#" onclick="displayMenu('/merger/lunch')">Lunch</a></li>
+        <li><a href="#" onclick="displayMenu('/merger/supper')">Supper</a></li>
+        <li><a href="register.html">Sign Up</a></li>
+      </ul>
+    </nav>
+
     <div id="menu" class="container">
-        <h1>Diner-PancakHouse Menu</h1>
+      <h1>Diner-PancakHouse Menu</h1>
     </div>
 
     <script>
-      let host = "http://localhost:8080";
+      let host = "https://diner-latest-aushveen.onrender.com";
       let menuDiv = document.getElementById("menu");
 
-      displayTheMenu();
+      displayMenu('/merger');
 
-      async function getTheMenu() {
-        let response = await fetch(host + "/merger");
+      async function getMenu(endpoint) {
+        let response = await fetch(host + endpoint);
         let menu = await response.json();
         return menu;
       }
 
-      async function displayTheMenu() {
-        let menu = await getTheMenu();
+      async function displayMenu(endpoint) {
+        let menu = await getMenu(endpoint);
+        menuDiv.innerHTML = '<h1>Diner-PancakHouse Menu</h1>';
         for (let menuItem of menu) {
           let div = document.createElement("div");
           div.class = "menu-item";
